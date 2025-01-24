@@ -22,12 +22,10 @@
         <ul>
           <li>All</li>
           <li>Today</li>
-          <li>Personal</li>
-          <li>College</li>
-          <li>Work</li>
-          <li>House</li>
-          <button class="create">+ Create new list</button>
         </ul>
+        <ul id="category-list-for-classification">
+        </ul>
+        <button class="create" onclick="openPopup('popup-new-list')">+ Create new list</button>
       </div>
       <div class="tasks-area">
         <div class="create-task">
@@ -85,7 +83,8 @@
               </svg>
             </button>
             <div class="category">
-              <div class="category-wrapper" id="category-list">
+              <div class="category-wrapper">
+                <ul id="category-list"></ul>
               </div>
               <button class="create-inverse" onclick="openPopup('popup-new-list')">+ Create new list</button>
             </div>
@@ -106,8 +105,9 @@
               </svg>
             </button>
             <div class="new-list-wrapper">
-              <input type="new list">
-              <button>ok</button>
+              <input type="text" placeholder="write name of new list" class="new-category" id="text-new-category">
+              <div class="button-area"><button class="add-category-btn" id="adding-new-category" onclick="addCategory()">Add</button></div>
+              
             </div>
           </div>
         </div>
