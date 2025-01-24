@@ -44,6 +44,11 @@ body {
   margin-right: 194px;
 }
 
+.classification-category.chosen {
+  color: #70ffdd;
+  border-bottom: 1px solid #70ffdd;
+}
+
 .category-list button {
   background-color: transparent;
   border: none;
