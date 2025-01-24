@@ -5,15 +5,30 @@ let todoList = [
   { text: "write an essay", category: "none", data: "today" },
 ];
 
-let categories = ["None", "Personal", "College", "Work", "House"];
+let categories = ["none", "Personal", "College", "Work", "House"];
 
-renderTodoList();
+let filteredCategory = "all"; // Текущая выбранная категория
 
 function renderTodoList() {
   let todoListHTML = "";
 
-  for (let i = 0; i < todoList.length; i++) {
-    const toDo = todoList[i];
+  // Фильтруем задачи, если выбрана конкретная категория
+  let filteredList = todoList;
+  if (filteredCategory == "today") {
+    filteredList =
+      filteredCategory === "all"
+        ? todoList
+        : todoList.filter((task) => task.data === filteredCategory);
+  } else {
+    filteredList =
+      filteredCategory === "all"
+        ? todoList
+        : todoList.filter((task) => task.category === filteredCategory);
+  }
+
+  console.log(filteredList);
+  for (let i = 0; i < filteredList.length; i++) {
+    const toDo = filteredList[i];
     const html = `
       <div class="todo-item">
         <div class="todo-left">
@@ -31,6 +46,34 @@ function renderTodoList() {
 
   document.querySelector(".task-list").innerHTML = todoListHTML;
 }
+
+// Фильтровать задачи по категории
+
+// Переменная для хранения текущей выбранной категории
+let currentCategoryElement = null;
+
+// Фильтровать задачи по категории
+function filterTasks(category) {
+  // Обновляем выбранную категорию
+  filteredCategory = category;
+
+  // Убираем класс у предыдущей выбранной категории
+  if (currentCategoryElement) {
+    currentCategoryElement.classList.remove("chosen");
+  }
+
+  // Находим текущую выбранную категорию и добавляем ей класс
+  const chosenCategory = document.getElementById(`classificate-${category}`);
+  if (chosenCategory) {
+    chosenCategory.classList.add("chosen");
+    currentCategoryElement = chosenCategory; // Сохраняем текущую категорию
+  }
+
+  // Перерисовываем список задач
+  renderTodoList();
+}
+
+renderTodoList();
 
 function addTodo() {
   const input_el = document.querySelector(".new-task");
@@ -328,14 +371,12 @@ const renderCategoriesForClassification = () => {
   categories.forEach((category) => {
     const li = document.createElement("li");
     li.textContent = category;
-    li.addEventListener("click", () =>
-      selectCategoryForClassification(category)
-    );
+    // Задаем уникальный id
+    li.id = `classificate-${category}`; // Можно использовать `category-${index}` для числового id
+    li.className = "classification-category";
+    li.addEventListener("click", () => filterTasks(category));
     categoryListForClassification.appendChild(li);
   });
 };
 
 renderCategoriesForClassification();
-
-// Функция для выбора категории
-const selectCategoryForClassification = (category) => {};
