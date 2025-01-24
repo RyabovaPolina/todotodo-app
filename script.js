@@ -5,7 +5,7 @@ let todoList = [
   { text: "write an essay", category: "none", data: "today" },
 ];
 
-let categories = ["Personal", "College", "Work", "House"];
+let categories = ["None", "Personal", "College", "Work", "House"];
 
 renderTodoList();
 
@@ -60,6 +60,9 @@ function addTodo() {
 
 function openPopup(namePopup) {
   document.getElementById(namePopup).classList.add("open");
+  if (namePopup == "popup-category") {
+    renderCategories();
+  }
 }
 
 function closePopup(namePopup) {
@@ -289,4 +292,50 @@ function loadTodoList() {
   }
 }
 
-function createNewList() {}
+// Получаем элементы
+const textInput = document.getElementById("text-new-category");
+const actionButton = document.getElementById("adding-new-category");
+
+function addCategory() {
+  categories.push(textInput);
+  renderCategories();
+}
+
+// Добавляем обработчик события input
+textInput.addEventListener("input", () => {
+  if (textInput.value.trim() !== "") {
+    // Если текст введен, активируем кнопку и меняем текст
+    actionButton.disabled = false;
+    actionButton.classList.add("active");
+  } else {
+    // Если поле пустое, отключаем кнопку и сбрасываем текст
+    actionButton.disabled = true;
+    actionButton.classList.remove("active");
+  }
+});
+
+// Находим элементы в DOM
+const categoryListForClassification = document.getElementById(
+  "category-list-for-classification"
+);
+
+// Функция для создания списка категорий
+const renderCategoriesForClassification = () => {
+  // Очищаем список (на случай повторного вызова)
+  categoryListForClassification.innerHTML = "";
+
+  // Создаем элементы списка для каждой категории
+  categories.forEach((category) => {
+    const li = document.createElement("li");
+    li.textContent = category;
+    li.addEventListener("click", () =>
+      selectCategoryForClassification(category)
+    );
+    categoryListForClassification.appendChild(li);
+  });
+};
+
+renderCategoriesForClassification();
+
+// Функция для выбора категории
+const selectCategoryForClassification = (category) => {};
