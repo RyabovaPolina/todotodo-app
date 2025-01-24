@@ -5,12 +5,15 @@ let todoList = [
   { text: "write an essay", category: "none", data: "today" },
 ];
 
+let doneList = [];
+
 let categories = ["none", "Personal", "College", "Work", "House"];
 
 let filteredCategory = "all"; // Текущая выбранная категория
 
 function renderTodoList() {
   let todoListHTML = "";
+  let doneListHTML = "";
 
   // Фильтруем задачи, если выбрана конкретная категория
   let filteredList = todoList;
@@ -33,10 +36,10 @@ function renderTodoList() {
       <div class="todo-item">
         <div class="todo-left">
           <button class="mark-complete" onclick="markAsComplete(${i})">✔</button>
-          <span class="todo-text">${toDo.text}</span>
+          <span class="todo-text" id="task-${toDo.text}">${toDo.text}</span>
         </div>
         <div class="todo-right">
-          <span class="todo-data">${toDo.data}</span>
+          <span class="todo-data" id="data-${toDo.data}">${toDo.data}</span>
           <span class="todo-category">${toDo.category}</span>
         </div>
       </div>`;
@@ -44,7 +47,24 @@ function renderTodoList() {
     console.log(toDo.data, toDo.category);
   }
 
+  for (let i = 0; i < doneList.length; i++) {
+    const done = doneList[i];
+    const html = `
+      <div class="todo-item done">
+        <div class="todo-left">
+          <button class="mark-complete" onclick="markAsComplete(${i})">✔</button>
+          <span class="todo-text" id="task-${done.text}">${done.text}</span>
+        </div>
+        <div class="todo-right">
+          <span class="todo-data">${done.data}</span>
+          <span class="todo-category">${done.category}</span>
+        </div>
+      </div>`;
+    doneListHTML += html;
+  }
+
   document.querySelector(".task-list").innerHTML = todoListHTML;
+  document.querySelector(".done-list").innerHTML = doneListHTML;
 }
 
 // Фильтровать задачи по категории
@@ -150,7 +170,7 @@ Cal.prototype.addDateSelection = function () {
       // Убираем выделение с других элементов
       days.forEach((d) => d.classList.remove("selected"));
       // Добавляем класс выделения к текущему элементу
-      e.target.classList.add("selected");
+      day.classList.add("selected");
 
       // Получаем дату из атрибута data-date
       let selectedDate = e.target.getAttribute("data-date");
@@ -326,12 +346,17 @@ renderCategories();
 
 function saveTodoList() {
   localStorage.setItem("todoList", JSON.stringify(todoList));
+  localStorage.setItem("doneList", JSON.stringify(doneList));
 }
 
 function loadTodoList() {
   const savedList = localStorage.getItem("todoList");
   if (savedList) {
     todoList = JSON.parse(savedList);
+  }
+  const doneSavedList = localStorage.getItem("doneList");
+  if (doneSavedList) {
+    doneList = JSON.parse(doneSavedList);
   }
 }
 
@@ -380,3 +405,34 @@ const renderCategoriesForClassification = () => {
 };
 
 renderCategoriesForClassification();
+
+function markAsComplete(index) {
+  // Помечаем задачу как выполненную
+  const completedTask = todoList[index];
+  todoList.splice(index, 1);
+
+  doneList.push(completedTask);
+  saveTodoList();
+
+  // Перерисовываем список задач
+  renderTodoList();
+}
+
+DaysOfWeek = [
+  "Sunday",
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+];
+
+var d = new Date();
+
+const tempDay = document.getElementById("day-main");
+
+tempDay.textContent = this.DaysOfWeek[d.getDay() - 1];
+
+const tempData = document.getElementById("data-main");
+tempData.textContent = `${d.getDate()}/${d.getMonth() + 1}/${d.getFullYear()}`;
