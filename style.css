@@ -1,0 +1,320 @@
+body {
+  /*background-color: #151b24;*/
+  background: radial-gradient(circle at 50% -40%, #70ffdd, transparent 50%),
+    linear-gradient(to bottom, #091921, #151b24);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  font-family: Inter;
+}
+
+.day-data {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-self: center;
+  font-weight: 600;
+  margin-top: 30px;
+  margin-bottom: 20px;
+}
+
+.day {
+  font-size: 32px;
+  height: 39px;
+}
+
+.data {
+  font-size: 16px;
+  height: 19px;
+}
+
+.container {
+  display: flex;
+  flex-direction: row;
+  margin-left: 60px;
+}
+
+.category-list li,
+.create {
+  font-size: 20px;
+  font-weight: 400;
+  padding-bottom: 10px;
+  border-bottom: 1px solid white;
+  margin-bottom: 30px;
+  margin-right: 194px;
+}
+
+.category-list button {
+  background-color: transparent;
+  border: none;
+  color: white;
+}
+
+.create-task {
+  display: flex;
+  flex-direction: row;
+  border: none;
+  margin: none;
+  width: 100%;
+}
+
+.add-task {
+  background-color: transparent;
+  border: 1px solid white;
+  border-radius: 16px;
+  color: white;
+  padding: 5px 30px;
+  height: 59px;
+}
+
+.creating-area {
+  display: flex;
+  flex-direction: row;
+  padding: 15px 12px;
+  border: 1px solid white;
+  border-radius: 16px;
+  width: 500px;
+  justify-content: space-between;
+  align-items: center;
+  background-color: rgba(217, 217, 217, 0.05);
+  margin-bottom: 20px;
+  margin-right: 15px;
+}
+
+.new-task {
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.986);
+  padding: 3px 0px;
+  height: 26px;
+  background-color: transparent;
+}
+
+.parameter,
+.parameter-category {
+  display: flex;
+  flex-direction: row;
+}
+
+.parameter-category,
+.parameter-data {
+  margin-left: 10px;
+  padding: 5px 8px;
+  border: 1px solid white;
+  border-radius: 16px;
+  background-color: transparent;
+  color: white;
+}
+
+.parameter-category {
+  margin-left: 10px;
+  width: 120px;
+  justify-content: space-between;
+}
+
+.tasks-area {
+  display: flex;
+  flex-direction: column;
+}
+
+.todo-item {
+  color: black;
+  background-color: rgba(255, 255, 255, 0.986);
+  padding: 15px;
+  margin-bottom: 10px;
+  height: 50px;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.todo-text {
+  font-size: 16px;
+  line-height: 19px;
+}
+
+.todo-data,
+.todo-category {
+  font-size: 13px;
+  padding: 5px 8px;
+  border: 1px solid rgb(217, 217, 217, 0.5);
+  border-radius: 15px;
+}
+
+.popup {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 99999;
+  background-color: rgba(0, 0, 0, 0.3);
+  display: grid;
+  align-items: center;
+  justify-content: center;
+  overflow-y: auto;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.4s, visibility 0.4s;
+}
+
+.popup.open {
+  visibility: visible;
+  opacity: 1;
+}
+
+.popup-content {
+  max-width: 500px;
+  z-index: 1;
+  position: relative;
+  padding: 15px;
+  width: 360px;
+  margin: 3em auto;
+  padding: 15px;
+  border: 1px solid #dcdcff;
+  border-radius: 24px;
+  background: #fff;
+}
+
+.popup-close {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  border: none;
+  background-color: transparent;
+}
+
+.mark-complete {
+  height: 20px;
+  width: 20px;
+  border-radius: 8px;
+  background-color: rgba(255, 255, 255, 0.986);
+  border: 1px solid rgb(217, 217, 217, 0.5);
+}
+
+.calendar-wrapper {
+  margin-top: 15px;
+}
+
+.category-wrapper {
+  margin-top: 15px;
+  background-color: white;
+  color: black;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.btns-data {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  margin-bottom: 5px;
+}
+
+.data-day {
+  padding: 5px 10px;
+  background-color: transparent;
+  border: 2px solid rgba(217, 217, 217, 0.5);
+  border-radius: 16px;
+  font-size: 18px;
+  color: rgba(89, 87, 87, 0.642);
+}
+
+table {
+  clear: both;
+  width: 100%;
+  border-collapse: collapse;
+  color: #444;
+}
+
+td {
+  height: 48px;
+  text-align: center;
+  vertical-align: middle;
+  width: 14.28571429%;
+}
+
+thead td {
+  border: none;
+  color: #28283b;
+  text-transform: uppercase;
+  font-size: 1.5em;
+  align-items: center;
+  justify-content: center;
+}
+
+thead tr {
+  align-items: center;
+  justify-content: center;
+}
+
+.days {
+  font-size: 16px;
+}
+
+#btnPrev {
+  float: left;
+  margin-left: 10px;
+}
+
+#btnNext {
+  float: right;
+  margin-right: 10px;
+}
+
+#btnPrev,
+#btnNext {
+  background: transparent;
+  border: none;
+  outline: none;
+  font-size: 1em;
+  color: #c0c0c0;
+  cursor: pointer;
+}
+
+#btnPrev:hover,
+#btnNext:hover {
+  color: #28283b;
+  font-weight: bold;
+}
+
+.selected-data {
+  background-color: #4caf50; /* Зеленый фон */
+  color: white; /* Белый текст */
+  border-radius: 50%; /* Круглое выделение */
+}
+
+.category-wrapper li,
+.create-inverse {
+  font-size: 20px;
+  font-weight: 400;
+  padding-bottom: 10px;
+  border-bottom: 1px solid black;
+  margin-bottom: 10px;
+  text-align: center;
+  width: 100%;
+}
+
+.category-wrapper Ul {
+  width: 100%;
+}
+
+.category-wrapper button {
+  background-color: transparent;
+  border: none;
+  color: black;
+}
+
+.selected-category {
+  background-color: #4caf50; /* Зеленый фон */
+  color: white; /* Белый текст */
+  border-radius: 50%; /* Круглое выделение */
+}
+
+.new-list-wrapper {
+  display: flex;
+  flex-direction: column;
+}
