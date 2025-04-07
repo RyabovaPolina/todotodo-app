@@ -14,18 +14,14 @@
   </head>
   <body>
     <div class="day-data">
-      <h1 class="day" id="day-main">Thursday</h1>
+      <h1 class="day" id="day-main"></h1>
       <h4 class="data" id="data-main">23/01/2024</h4>
     </div>
     <div class="container">
       <div class="category-list">
-        <ul>
-          <li onclick="filterTasks('all')" id="classificate-all" class="classification-category">All</li>
-          <li onclick="filterTasks('today')" id="classificate-today" class="classification-category">Today</li>
-        </ul>
         <ul id="category-list-for-classification">
         </ul>
-        <button class="create" onclick="openPopup('popup-new-list')">+ Create new list</button>
+        <button class="create" id="add-new-list-btn">+ Create new list</button>
       </div>
       <div class="tasks-area">
         <div class="create-task">
@@ -33,87 +29,19 @@
             <input type="text" placeholder="Write a new task"
               class="new-task" />
             <div class="parameter">
-              <button class="parameter-data" id="data-btn"
-                onclick="openPopup('popup-data')">Data</button>
-              <button class="parameter-category" id="category-btn"
-                onclick="openPopup('popup-category')">
-                <h5>No list</h5>
-                <h5>▼</h5>
+              <button class="parameter-data" id="data-btn">Data</button>
+              <button class="parameter-category" id="category-btn">
+                <span>No list</span>
+                <span>▼</span>
               </button>
             </div>
           </div>
-          <button class="add-task" onclick="addTodo()">Add</button>
+          <button class="add-task js-add-task">Add</button>
         </div>
-        <!-- Popup -->
-        <div id="popup-data" class="popup">
-          <div class="popup-content">
-            <button id="close-data-btn" class="popup-close"
-              onclick="closePopup('popup-data')">
-              <svg width="22" height="22" viewBox="0 0 22 22" fill="none"
-                xmlns="http://www.w3.org/2000/svg">
-                <line x1="5.91341" y1="5.48009" x2="16.52" y2="16.0867"
-                  stroke="#1E1E1E" stroke-width="2" />
-                <line x1="6.26701" y1="16.0867" x2="16.8736" y2="5.48011"
-                  stroke="#1E1E1E" stroke-width="2" />
-              </svg>
-            </button>
-            <div class="calendar-wrapper">
-              <div class="btns-data">
-                <button class="data-day"
-                  onclick="selectData('today')">Today</button>
-                <button class="data-day"
-                  onclick="selectData('tomorrow')">Tomorrow</button>
-              </div>
-              <div id="divCal"></div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Popup 2-->
-        <div id="popup-category" class="popup">
-          <div class="popup-content">
-            <button id="close-category-btn" class="popup-close"
-              onclick="closePopup('popup-category')">
-              <svg width="22" height="22" viewBox="0 0 22 22" fill="none"
-                xmlns="http://www.w3.org/2000/svg">
-                <line x1="5.91341" y1="5.48009" x2="16.52" y2="16.0867"
-                  stroke="#1E1E1E" stroke-width="2" />
-                <line x1="6.26701" y1="16.0867" x2="16.8736" y2="5.48011"
-                  stroke="#1E1E1E" stroke-width="2" />
-              </svg>
-            </button>
-            <div class="category">
-              <div class="category-wrapper">
-                <ul id="category-list"></ul>
-              </div>
-              <button class="create-inverse" onclick="openPopup('popup-new-list')">+ Create new list</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Popup 3-->
-        <div id="popup-new-list" class="popup">
-          <div class="popup-content">
-            <button id="close-new-list-btn" class="popup-close"
-              onclick="closePopup('popup-new-list')">
-              <svg width="22" height="22" viewBox="0 0 22 22" fill="none"
-                xmlns="http://www.w3.org/2000/svg">
-                <line x1="5.91341" y1="5.48009" x2="16.52" y2="16.0867"
-                  stroke="#1E1E1E" stroke-width="2" />
-                <line x1="6.26701" y1="16.0867" x2="16.8736" y2="5.48011"
-                  stroke="#1E1E1E" stroke-width="2" />
-              </svg>
-            </button>
-            <div class="new-list-wrapper">
-              <input type="text" placeholder="write name of new list" class="new-category" id="text-new-category">
-              <div class="button-area"><button class="add-category-btn" id="adding-new-category" onclick="addCategory()">Add</button></div>
-              
-            </div>
-          </div>
-        </div>
+         <div class="popup-container" id="popup-container"></div>
         <div class="task-list"></div>
         <div class="done-list"></div>
       </div>
-      <script src="script.js"></script>
+      <script src="script.js" type="module"></script>
     </body>
   </html>

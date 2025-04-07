@@ -180,15 +180,15 @@ span#data-today {
   align-items: center;
   justify-content: center;
   overflow-y: auto;
-  opacity: 0;
-  visibility: hidden;
+  visibility: visible;
+  opacity: 1;
   transition: opacity 0.4s, visibility 0.4s;
 }
 
-.popup.open {
+/*.popup.open {
   visibility: visible;
   opacity: 1;
-}
+}*/
 
 .popup-content {
   max-width: 500px;
@@ -208,6 +208,7 @@ span#data-today {
   top: 15px;
   right: 15px;
   border: none;
+
   background-color: transparent;
 }
 
