@@ -68,9 +68,11 @@ export function renderCategoriesForClassification() {
     li.id = `classificate-${category.id}`; // Можно использовать `category-${index}` для числового id
     li.className = "classification-category";
     li.addEventListener("click", () => {
-      let newList = filterTasks(category.id, todoList);
-      console.log(newList);
-      renderTodoList(newList, doneList);
+      let newTodoList = filterTasks(category.id, todoList);
+      console.log(newTodoList);
+      let newDoneList = filterTasks(category.id, doneList);
+      console.log(newDoneList);
+      renderTodoList(newTodoList, newDoneList);
     });
     categoryListForClassification.appendChild(li);
   });
