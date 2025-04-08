@@ -25,5 +25,5 @@ export function markAsComplete(index) {
   saveDoneList();
 
   // Перерисовываем список задач
-  renderTodoList(todoList);
+  renderTodoList(todoList, doneList);
 }

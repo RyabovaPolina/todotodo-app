@@ -1,5 +1,6 @@
 import { renderTodoList } from "../script.js";
 import { generateId } from "../utils.js";
+import { doneList } from "./done.js";
 
 export let todoList = [];
 loadTodoFromStorage();
@@ -23,7 +24,7 @@ export function addTodoList() {
   });
 
   input_el.value = "";
-  renderTodoList(todoList);
+  renderTodoList(todoList, doneList);
 
   saveToStorage();
 }

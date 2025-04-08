@@ -9,7 +9,7 @@ import {
 import { activatePopups } from "./popup.js";
 import { updateTime } from "./utils.js";
 
-export function renderTodoList(todolist) {
+export function renderTodoList(todolist, donelist) {
   let todoListHTML = "";
   let doneListHTML = "";
   // Получаем сегодняшнюю дату
@@ -38,8 +38,8 @@ export function renderTodoList(todolist) {
     //console.log(toDo.data, toDo.category);
   }
 
-  for (let i = 0; i < doneList.length; i++) {
-    const done = doneList[i];
+  for (let i = 0; i < donelist.length; i++) {
+    const done = donelist[i];
     const displayDate = done.data === today ? "today" : done.data;
     const category = getCategory(done.categoryId);
     const html = `
@@ -82,7 +82,7 @@ function init() {
   loadDoneFromStorage();
   updateTime();
   activatePopups();
-  renderTodoList(todoList);
+  renderTodoList(todoList, doneList);
 }
 
 window.addEventListener("DOMContentLoaded", init);

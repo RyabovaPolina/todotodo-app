@@ -2,6 +2,7 @@ import { renderTodoList } from "./script.js";
 import { closePopup } from "./popup.js";
 import { todoList } from "./data/todo.js";
 import { filterTasks, generateId } from "./utils.js";
+import { doneList } from "./data/done.js";
 
 export let categories = [];
 
@@ -69,7 +70,7 @@ export function renderCategoriesForClassification() {
     li.addEventListener("click", () => {
       let newList = filterTasks(category.id, todoList);
       console.log(newList);
-      renderTodoList(newList);
+      renderTodoList(newList, doneList);
     });
     categoryListForClassification.appendChild(li);
   });
