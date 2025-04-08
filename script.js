@@ -40,15 +40,17 @@ export function renderTodoList(todolist) {
 
   for (let i = 0; i < doneList.length; i++) {
     const done = doneList[i];
+    const displayDate = done.data === today ? "today" : done.data;
+    const category = getCategory(done.categoryId);
     const html = `
       <div class="todo-item done">
         <div class="todo-left">
-          <button class="mark-complete js-mark-complete " data-button-mark-complete-id="${i}">✔</button>
+          <button class="mark-complete js-mark-complete " data-button-mark-complete-id="${done.id}">✔</button>
           <span class="todo-text" id="task-${done.text}">${done.text}</span>
         </div>
         <div class="todo-right">
-          <span class="todo-data">${done.data}</span>
-          <span class="todo-category">${done.category}</span>
+          <span class="todo-data">${displayDate}</span>
+          <span class="todo-category">${category.name}</span>
         </div>
       </div>`;
     doneListHTML += html;
@@ -78,9 +80,9 @@ function init() {
   renderCategoriesForClassification();
   loadTodoFromStorage();
   loadDoneFromStorage();
-  renderTodoList(todoList);
   updateTime();
   activatePopups();
+  renderTodoList(todoList);
 }
 
 window.addEventListener("DOMContentLoaded", init);
