@@ -1,6 +1,6 @@
-import { getCategory, categories } from "../categories.js";
+import { getCategory, categories } from "./categories.js";
 import { renderTodoList } from "../script.js";
-import { generateId } from "../utils.js";
+import { generateId } from "../utils/utils.js";
 import { doneList } from "./done.js";
 
 export let todoList = [];
@@ -53,7 +53,7 @@ export function loadTodoFromStorage() {
     {
       id: "5412314245912",
       text: "make dinner",
-      categoryId: "737139128912235652",
+      categoryId: "122138791242",
       data: "2025-04-08",
     },
     {

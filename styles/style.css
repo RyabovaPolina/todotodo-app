@@ -16,7 +16,7 @@ body {
   justify-self: center;
   font-weight: 600;
   margin-top: 30px;
-  margin-bottom: 20px;
+  margin-bottom: 80px;
 }
 
 .day {
@@ -32,7 +32,7 @@ body {
 .container {
   display: flex;
   flex-direction: row;
-  margin-left: 60px;
+  justify-content: space-evenly;
 }
 
 .category-list li,
@@ -42,7 +42,6 @@ body {
   padding-bottom: 10px;
   border-bottom: 1px solid white;
   margin-bottom: 30px;
-  margin-right: 194px;
 }
 
 .classification-category.chosen {
@@ -54,6 +53,10 @@ body {
   background-color: transparent;
   border: none;
   color: white;
+}
+
+.tasks-area {
+  max-width: 600px;
 }
 
 .create-task {
@@ -79,7 +82,6 @@ body {
   padding: 15px 12px;
   border: 1px solid white;
   border-radius: 16px;
-  width: 500px;
   justify-content: space-between;
   align-items: center;
   background-color: rgba(217, 217, 217, 0.05);
@@ -122,6 +124,11 @@ body {
   flex-direction: column;
 }
 
+.task-list,
+.done-list {
+  max-width: 100%;
+}
+
 .todo-item {
   color: black;
   background-color: rgba(255, 255, 255, 0.986);
@@ -140,14 +147,6 @@ body {
   text-decoration: line-through;
   color: gray;
   opacity: 0.7;
-  padding: 15px;
-  margin-bottom: 10px;
-  height: 50px;
-  border-radius: 16px;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
 }
 
 .todo-text {
@@ -166,50 +165,6 @@ body {
 span#data-today {
   border: 1px solid #3cc5a5;
   color: #3cc5a5;
-}
-
-.popup {
-  position: fixed;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100vh;
-  z-index: 99999;
-  background-color: rgba(0, 0, 0, 0.3);
-  display: grid;
-  align-items: center;
-  justify-content: center;
-  overflow-y: auto;
-  visibility: visible;
-  opacity: 1;
-  transition: opacity 0.4s, visibility 0.4s;
-}
-
-/*.popup.open {
-  visibility: visible;
-  opacity: 1;
-}*/
-
-.popup-content {
-  max-width: 500px;
-  z-index: 1;
-  position: relative;
-  padding: 15px;
-  width: 360px;
-  margin: 3em auto;
-  padding: 15px;
-  border: 1px solid #dcdcff;
-  border-radius: 24px;
-  background: #fff;
-}
-
-.popup-close {
-  position: absolute;
-  top: 15px;
-  right: 15px;
-  border: none;
-
-  background-color: transparent;
 }
 
 .mark-complete {
@@ -240,79 +195,6 @@ span#data-today {
   flex-direction: row;
   gap: 10px;
   margin-bottom: 5px;
-}
-
-.data-day {
-  padding: 5px 10px;
-  background-color: transparent;
-  border-radius: 16px;
-  font-size: 18px;
-  border: 2px solid #3cc5a5;
-  color: #3cc5a5;
-}
-
-table {
-  clear: both;
-  width: 100%;
-  border-collapse: collapse;
-  color: #444;
-}
-
-td {
-  height: 48px;
-  text-align: center;
-  vertical-align: middle;
-  width: 14.28571429%;
-}
-
-thead td {
-  border: none;
-  color: #28283b;
-  text-transform: uppercase;
-  font-size: 1.5em;
-  align-items: center;
-  justify-content: center;
-}
-
-thead tr {
-  align-items: center;
-  justify-content: center;
-}
-
-.days {
-  font-size: 16px;
-}
-
-#btnPrev {
-  float: left;
-  margin-left: 10px;
-}
-
-#btnNext {
-  float: right;
-  margin-right: 10px;
-}
-
-#btnPrev,
-#btnNext {
-  background: transparent;
-  border: none;
-  outline: none;
-  font-size: 1em;
-  color: #c0c0c0;
-  cursor: pointer;
-}
-
-#btnPrev:hover,
-#btnNext:hover {
-  color: #28283b;
-  font-weight: bold;
-}
-
-.selected-data {
-  background-color: #4caf50; /* Зеленый фон */
-  color: white; /* Белый текст */
-  border-radius: 50%; /* Круглое выделение */
 }
 
 .category-wrapper li,
@@ -350,8 +232,9 @@ thead tr {
 
 .new-category {
   font-size: 16px;
+  height: 30px;
   color: black;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
 }
 
 .button-area {
@@ -370,4 +253,86 @@ thead tr {
   border-radius: 8px;
   background-color: #70ffdd;
   color: #091921;
+}
+
+/* По умолчанию показываем ul, скрываем select */
+#category-list-for-classification-select {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  .container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0px 15px;
+  }
+  .category-list {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    min-width: 300px;
+    max-width: 450px;
+    width: 100%;
+  }
+  #category-list-for-classification {
+    display: none;
+  }
+
+  .tasks-area {
+    width: 100%;
+    max-width: 450px;
+  }
+  .creating-area {
+    width: 85%;
+    padding: 8px 8px;
+    margin-right: 10px;
+  }
+
+  .add-task {
+    width: 15%;
+    padding: 6px 8px;
+    margin-bottom: 20px;
+  }
+
+  .new-task {
+    width: 50%;
+  }
+
+  .parameter-category {
+    width: 60%;
+  }
+
+  .todo-item {
+    height: auto;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  #category-list-for-classification-select {
+    display: block;
+    height: 50%;
+    border-radius: 8px;
+    width: 100px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  .container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+  }
+
+  .category-list li,
+  .create {
+    width: 100px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .creating-area {
+    width: 500px;
+  }
 }

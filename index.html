@@ -9,8 +9,10 @@
     <link
       href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@400;500;600&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
       rel="stylesheet" />
-    <link rel="stylesheet" href="clean-style.css" />
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="./styles/clean-style.css" />
+    <link rel="stylesheet" href="./styles/style.css" />
+    <link rel="stylesheet" href="./styles/popup-style.css" />
+    <link rel="stylesheet" href="./styles/calendar-style.css" />
   </head>
   <body>
     <div class="day-data">
@@ -19,6 +21,8 @@
     </div>
     <div class="container">
       <div class="category-list">
+          <select name="category-list-select" id="category-list-for-classification-select">
+        </select>
         <ul id="category-list-for-classification">
         </ul>
         <button class="create" id="add-new-list-btn">+ Create new list</button>

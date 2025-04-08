@@ -60,11 +60,11 @@ Cal.prototype.addDateSelection = function () {
 };
 
 // Функция для выбора даты
-const selectData = (data) => {
+export function selectData(data) {
   const dataButton = document.getElementById("data-btn");
   dataButton.textContent = data; // Устанавливаем текст кнопки
   closePopup("popup-data"); // Закрываем попап
-};
+}
 
 // Переход к следующему месяцу
 Cal.prototype.nextMonth = function () {

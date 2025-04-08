@@ -5,9 +5,9 @@ import {
   renderCategoriesForClassification,
   getCategory,
   categories,
-} from "./categories.js";
-import { activatePopups } from "./popup.js";
-import { updateTime } from "./utils.js";
+} from "./data/categories.js";
+import { activatePopups } from "./data/popup.js";
+import { updateTime } from "./utils/utils.js";
 
 export function renderTodoList(todolist, donelist) {
   let todoListHTML = "";

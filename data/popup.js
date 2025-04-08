@@ -1,4 +1,4 @@
-import { Cal } from "./calendar.js";
+import { Cal, selectData } from "./calendar.js";
 import { renderCategories, addCategory } from "./categories.js";
 
 const popupContainer = document.getElementById("popup-container");
@@ -17,10 +17,8 @@ const popupDataHTML = `
             </button>
             <div class="calendar-wrapper">
               <div class="btns-data">
-                <button class="data-day"
-                  onclick="selectData('today')">Today</button>
-                <button class="data-day"
-                  onclick="selectData('tomorrow')">Tomorrow</button>
+                <button class="data-today js-data-picker" data-picker-name="today">Today</button>
+                <button class="data-tomorrow js-data-picker" data-picker-name="tomorrow">Tomorrow</button>
               </div>
               <div id="divCal"></div>
             </div>
@@ -72,6 +70,8 @@ const popupNewListHTML = `
 
 export function showPopup(html, closeBtnId) {
   popupContainer.innerHTML = html;
+
+  console.log(html);
   document.getElementById(closeBtnId).addEventListener("click", () => {
     popupContainer.innerHTML = "";
   });
@@ -87,6 +87,13 @@ export function activatePopups() {
   document.getElementById("data-btn").addEventListener("click", () => {
     showPopup(popupDataHTML, "close-data-btn");
     new Cal("divCal").showcurr();
+    console.log("calendar");
+    document.querySelectorAll(".js-data-picker").forEach((buttonPicker) => {
+      buttonPicker.addEventListener("clicl", () => {
+        const pickerName = buttonPicker.dataset.dataPickerName;
+        selectData(pickerName);
+      });
+    });
   });
 
   document.getElementById("category-btn").addEventListener("click", () => {

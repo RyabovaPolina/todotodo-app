@@ -1,8 +1,8 @@
-import { renderTodoList } from "./script.js";
+import { renderTodoList } from "../script.js";
 import { closePopup } from "./popup.js";
-import { todoList } from "./data/todo.js";
-import { filterTasks, generateId } from "./utils.js";
-import { doneList } from "./data/done.js";
+import { todoList } from "./todo.js";
+import { filterTasks, generateId } from "../utils/utils.js";
+import { doneList } from "./done.js";
 
 export let categories = [];
 
@@ -57,24 +57,42 @@ export function renderCategoriesForClassification() {
   const categoryListForClassification = document.getElementById(
     "category-list-for-classification"
   );
+
+  const categoryListForClassificationSelect = document.getElementById(
+    "category-list-for-classification-select"
+  );
   // Очищаем список (на случай повторного вызова)
   categoryListForClassification.innerHTML = "";
+  categoryListForClassificationSelect.innerHTML = "";
 
   // Создаем элементы списка для каждой категории
   categories.forEach((category) => {
     const li = document.createElement("li");
+    const option = document.createElement("option");
     li.textContent = category.name;
     // Задаем уникальный id
-    li.id = `classificate-${category.id}`; // Можно использовать `category-${index}` для числового id
+    li.id = `classificate-${category.id}`;
     li.className = "classification-category";
     li.addEventListener("click", () => {
       let newTodoList = filterTasks(category.id, todoList);
-      console.log(newTodoList);
       let newDoneList = filterTasks(category.id, doneList);
-      console.log(newDoneList);
       renderTodoList(newTodoList, newDoneList);
     });
     categoryListForClassification.appendChild(li);
+
+    option.textContent = category.name;
+    option.value = category.id;
+    categoryListForClassificationSelect.appendChild(option);
+    categoryListForClassificationSelect.value = "5223128912232";
+
+    categoryListForClassificationSelect.addEventListener("change", (e) => {
+      const selectedCategoryId = e.target.value;
+      const newTodoList = filterTasks(selectedCategoryId, todoList);
+      const newDoneList = filterTasks(selectedCategoryId, doneList);
+      console.log(doneList);
+      console.log(newDoneList);
+      renderTodoList(newTodoList, newDoneList);
+    });
   });
 }
 
