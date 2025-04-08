@@ -38,23 +38,28 @@ export function renderTodoList(todolist, donelist) {
     //console.log(toDo.data, toDo.category);
   }
 
-  for (let i = 0; i < donelist.length; i++) {
-    const done = donelist[i];
-    if (!done) continue;
-    const displayDate = done.data === today ? "today" : done.data;
-    const category = getCategory(done.categoryId);
-    const html = `
-      <div class="todo-item done">
-        <div class="todo-left">
-          <button class="mark-complete js-mark-complete " data-button-mark-complete-id="${done.id}">✔</button>
-          <span class="todo-text" id="task-${done.text}">${done.text}</span>
-        </div>
-        <div class="todo-right">
-          <span class="todo-data">${displayDate}</span>
-          <span class="todo-category">${category.name}</span>
-        </div>
-      </div>`;
-    doneListHTML += html;
+  if (donelist.length > 0) {
+    for (let i = 0; i < donelist.length; i++) {
+      const done = donelist[i];
+      if (!done) continue; // Пропускаем, если элемент невалидный
+
+      const displayDate = done.data === today ? "today" : done.data;
+      const category = getCategory(done.categoryId);
+      const html = `
+        <div class="todo-item done">
+          <div class="todo-left">
+            <button class="mark-complete js-mark-complete" data-button-mark-complete-id="${done.id}">✔</button>
+            <span class="todo-text" id="task-${done.text}">${done.text}</span>
+          </div>
+          <div class="todo-right">
+            <span class="todo-data">${displayDate}</span>
+            <span class="todo-category">${category.name}</span>
+          </div>
+        </div>`;
+      doneListHTML += html;
+    }
+  } else {
+    doneListHTML = ``;
   }
 
   document.querySelector(".task-list").innerHTML = todoListHTML;
