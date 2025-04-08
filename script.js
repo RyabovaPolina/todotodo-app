@@ -40,6 +40,7 @@ export function renderTodoList(todolist, donelist) {
 
   for (let i = 0; i < donelist.length; i++) {
     const done = donelist[i];
+    if (!done) continue;
     const displayDate = done.data === today ? "today" : done.data;
     const category = getCategory(done.categoryId);
     const html = `
