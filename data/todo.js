@@ -66,6 +66,6 @@ export function loadTodoFromStorage() {
   //console.log(todoList);
 }
 
-function saveToStorage() {
+export function saveToStorage() {
   localStorage.setItem("todo", JSON.stringify(todoList));
 }

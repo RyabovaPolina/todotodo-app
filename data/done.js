@@ -1,5 +1,5 @@
 import { renderTodoList } from "../script.js";
-import { todoList } from "./todo.js";
+import { todoList, saveToStorage } from "./todo.js";
 
 export let doneList = [];
 loadDoneFromStorage();
@@ -16,13 +16,18 @@ function saveDoneList() {
   localStorage.setItem("doneList", JSON.stringify(doneList));
 }
 
-export function markAsComplete(index) {
-  // Помечаем задачу как выполненную
-  const completedTask = todoList[index];
-  todoList.splice(index, 1);
-
+export function markAsComplete(id) {
+  const completedTask = todoList.find((task) => task.id === id);
   doneList.push(completedTask);
+
+  // удаляем из активных задач
+  const index = todoList.findIndex((task) => task.id === id);
+  if (index !== -1) {
+    todoList.splice(index, 1); // удаляем один элемент по индексу
+  }
+
   saveDoneList();
+  saveToStorage();
 
   // Перерисовываем список задач
   renderTodoList(todoList, doneList);
