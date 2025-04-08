@@ -20,8 +20,9 @@ export function renderTodoList(todolist, donelist) {
     const toDo = todolist[i];
     // Если дата задачи совпадает с сегодняшней, заменяем её на 'today'
     const displayDate = toDo.data === today ? "today" : toDo.data;
-
+    console.log(toDo.categoryId);
     const category = getCategory(toDo.categoryId);
+    console.log(category);
 
     const html = `
       <div class="todo-item">

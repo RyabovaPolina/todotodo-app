@@ -1,3 +1,4 @@
+import { getCategory, categories } from "../categories.js";
 import { renderTodoList } from "../script.js";
 import { generateId } from "../utils.js";
 import { doneList } from "./done.js";
@@ -10,7 +11,14 @@ export function addTodoList() {
   const selected_category = document.querySelector(".parameter-category");
   const selected_data = document.querySelector(".parameter-data");
   const text_task = input_el.value;
-  const text_selected_category = selected_category.textContent;
+  const selected_category_name = selected_category.textContent;
+  console.log(selected_category_name);
+
+  const category = categories.find(
+    (category) => category.name === selected_category_name
+  );
+
+  console.log(category);
 
   const text_selected_data = selected_data.textContent;
 
@@ -19,14 +27,13 @@ export function addTodoList() {
   todoList.push({
     id: newId,
     text: text_task,
-    category: text_selected_category,
+    categoryId: category.id,
     data: text_selected_data,
   });
 
   input_el.value = "";
-  renderTodoList(todoList, doneList);
-
   saveToStorage();
+  renderTodoList(todoList, doneList);
 }
 
 export function loadTodoFromStorage() {
