@@ -3,10 +3,15 @@ body {
   background: radial-gradient(circle at 50% -40%, #70ffdd, transparent 50%),
     linear-gradient(to bottom, #091921, #151b24);
   color: white;
-  display: flex;
-  flex-direction: column;
   font-family: Inter;
   background-attachment: fixed; /* Фиксируем фон */
+}
+
+.container {
+  display: grid;
+  grid-template-columns: 1fr 2.5fr;
+  justify-content: center;
+  padding: 30px;
 }
 
 .day-data {
@@ -29,10 +34,8 @@ body {
   height: 19px;
 }
 
-.container {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
+.category-list {
+  max-width: 170px;
 }
 
 .category-list li,
@@ -42,6 +45,7 @@ body {
   padding-bottom: 10px;
   border-bottom: 1px solid white;
   margin-bottom: 30px;
+  overflow-wrap: break-word;
 }
 
 .classification-category.chosen {
@@ -57,6 +61,7 @@ body {
 
 .tasks-area {
   max-width: 600px;
+  width: 100%;
 }
 
 .create-task {
@@ -78,6 +83,7 @@ body {
 
 .creating-area {
   display: flex;
+  width: 100%;
   flex-direction: row;
   padding: 15px 12px;
   border: 1px solid white;
@@ -257,7 +263,25 @@ span#data-today {
 
 /* По умолчанию показываем ul, скрываем select */
 #category-list-for-classification-select {
-  display: none;
+  cursor: pointer; /* Курсор указателя */
+  appearance: none; /* Замена стандартного вида */
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 200px;
+  background: #f0f0f0 url("../images/dropdown-arrow.png") no-repeat right 10px
+    center;
+  border: 1px solid #ccc;
+  padding: 5px 30px 5px 10px; /* Резервируем место под стрелку */
+  border-radius: 4px;
+  background-size: 18px auto; /* подгон размера стрелки */
+  background-position: right 10px center;
+}
+
+select option {
+  width: 100%;
+  box-sizing: border-box; /* Учитывает padding в ширине */
+  overflow-wrap: break-word;
+  overflow: hidden; /* Скрывает длинный текст */
 }
 
 @media (max-width: 767px) {
@@ -314,25 +338,23 @@ span#data-today {
     display: block;
     height: 50%;
     border-radius: 8px;
-    width: 100px;
+    width: 150px;
   }
 }
 
 @media (min-width: 768px) and (max-width: 1024px) {
-  .container {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-  }
-
   .category-list li,
   .create {
     width: 100px;
   }
-}
 
-@media (min-width: 1440px) {
-  .creating-area {
-    width: 500px;
+  .container {
+    display: grid;
+    grid-template-columns: 1fr 4fr;
+    padding: 20px;
+  }
+
+  .category-list {
+    margin: 0 auto;
   }
 }
