@@ -28,6 +28,7 @@ function identifyPopup(type) {
         </div> 
       </div>
     `,
+    alert: `<div style="color:black; padding: 20px; line-height: 1.25rem">Для создания задачи необходимо заполнить все поля-атрибуты: текст, категория, дата.</div>`,
     default: `<div>Unknown popup type</div>`,
   };
 
@@ -140,6 +141,10 @@ if (newListBtn) {
   newListBtn.addEventListener("click", () => {
     openNewListPopup();
   });
+}
+
+export function openAlertPopup() {
+  showPopup(identifyPopup("alert"), "close-alert-btn");
 }
 
 function openNewListPopup() {

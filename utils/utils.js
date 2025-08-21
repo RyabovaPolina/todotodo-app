@@ -40,7 +40,7 @@ export function updateTime() {
   const today = new Date();
   const dayOfWeek = today.getDay(); // Получаем день недели (0 — воскресенье, 1 — понедельник, ...)
   const dataDay = today.getDate();
-  const dataMonth = today.getMonth();
+  const dataMonth = today.getMonth() + 1;
   const dataYear = today.getFullYear();
 
   // Массив с названиями дней недели

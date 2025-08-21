@@ -263,8 +263,9 @@ span#data-today {
 
 /* По умолчанию показываем ul, скрываем select */
 #category-list-for-classification-select {
+  display: none;
   cursor: pointer; /* Курсор указателя */
-  appearance: none; /* Замена стандартного вида */
+  appearance: none;
   text-overflow: ellipsis;
   white-space: nowrap;
   width: 200px;

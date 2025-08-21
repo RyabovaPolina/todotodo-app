@@ -2,38 +2,37 @@ import { getCategory, categories } from "./categories.js";
 import { renderTodoList } from "../script.js";
 import { generateId } from "../utils/utils.js";
 import { doneList } from "./done.js";
+import { openAlertPopup } from "./popup.js";
 
 export let todoList = [];
 loadTodoFromStorage();
 
 export function addTodoList() {
-  const input_el = document.querySelector(".new-task");
-  const selected_category = document.querySelector(".parameter-category");
-  const selected_data = document.querySelector(".parameter-data");
-  const text_task = input_el.value;
-  const selected_category_name = selected_category.textContent;
-  console.log(selected_category_name);
-
+  const text_task = document.querySelector(".new-task").value;
+  const selected_category_name = document.querySelector(
+    ".parameter-category"
+  ).textContent;
   const category = categories.find(
     (category) => category.name === selected_category_name
   );
-
-  console.log(category);
-
-  const text_selected_data = selected_data.textContent;
-
+  const text_selected_data =
+    document.querySelector(".parameter-data").textContent;
   const newId = generateId();
 
-  todoList.push({
-    id: newId,
-    text: text_task,
-    categoryId: category.id,
-    data: text_selected_data,
-  });
+  if (text_task && category && text_selected_data) {
+    todoList.push({
+      id: newId,
+      text: text_task,
+      categoryId: category.id,
+      data: text_selected_data,
+    });
 
-  input_el.value = "";
-  saveToStorage();
-  renderTodoList(todoList, doneList);
+    input_el.value = "";
+    saveToStorage();
+    renderTodoList(todoList, doneList);
+  } else {
+    openAlertPopup();
+  }
 }
 
 export function loadTodoFromStorage() {
@@ -63,8 +62,6 @@ export function loadTodoFromStorage() {
       data: "2025-04-07",
     },
   ];
-
-  //console.log(saved);
 
   // Мутируем массив, а не перезаписываем его
   todoList.length = 0; // Очищаем текущий массив

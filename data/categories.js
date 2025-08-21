@@ -14,7 +14,6 @@ export function addCategory() {
     id: generateId(),
     name: textInput,
   });
-  //console.log(categories);
   renderCategoriesForClassification();
   saveToStorage();
   closePopup("popup-new-list"); // Закрываем попап
