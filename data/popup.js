@@ -1,4 +1,4 @@
-import { categoriesStore } from "./categories-store.js";
+import { categoriesStore } from "./categories.js";
 
 const popupContainer = document.getElementById("popup-container");
 

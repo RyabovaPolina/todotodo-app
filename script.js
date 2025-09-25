@@ -1,7 +1,7 @@
 import { updateTime } from "./utils/utils.js"
-import { store } from "./todo-store.js"
-import { categoriesStore } from "./categories-store.js";
-import { openNewListPopup, openAlertPopup } from "./popups.js";
+import { store } from "./data/todo.js"
+import { categoriesStore } from "./data/categories.js";
+import { openNewListPopup, openAlertPopup } from "./data/popup.js";
 
 function renderTodolist(){
     let todoListHTML = "";

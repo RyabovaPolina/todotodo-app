@@ -79,6 +79,14 @@ body {
   color: white;
   padding: 5px 30px;
   height: 59px;
+  transition: all 0.3s ease;
+}
+
+button.add-task:hover {
+  background-color: white;
+  border-color: #3cc5a5;;
+  color: black;
+  box-shadow: 0 0 5px #3cc5a5;
 }
 
 .creating-area {
@@ -95,6 +103,11 @@ body {
   margin-right: 15px;
 }
 
+.creating-area:focus-within {
+  border: 1px solid #3cc5a5;
+  box-shadow: 0 0 5px #3cc5a5;
+}
+
 .new-task {
   font-size: 16px;
   color: rgba(255, 255, 255, 0.986);
@@ -108,6 +121,11 @@ body {
   display: flex;
   flex-direction: row;
 }
+
+.parameter{
+  width: 50%;
+}
+
 
 .parameter-category,
 .parameter-data {
@@ -148,11 +166,31 @@ body {
   align-items: center;
 }
 
+.todo-left,.todo-right{
+  width: 50%;
+}
+
+.todo-right{
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+
 .todo-item.done {
   background-color: rgba(152, 152, 152, 0.986);
   text-decoration: line-through;
   color: gray;
   opacity: 0.7;
+}
+
+.todo-item.toDelete {
+  text-decoration: none;
+  opacity: 1;
+}
+
+.todo-item.done .mark-complete{
+  opacity: 0.2;
 }
 
 .todo-text {
@@ -168,7 +206,7 @@ body {
   border-radius: 15px;
 }
 
-span#data-today {
+span.todo-data, span.todo-category {
   border: 1px solid #3cc5a5;
   color: #3cc5a5;
 }
@@ -186,6 +224,12 @@ span#data-today {
   margin-top: 15px;
 }
 
+.form-select.my-transparent-select {
+  background-color: white !important;   /* убираем цвет фона */
+  border: 1px solid white;          /* по желанию — своя рамка */
+  color: black;
+}
+
 .category-wrapper {
   margin-top: 15px;
   background-color: white;
@@ -195,6 +239,21 @@ span#data-today {
   align-items: center;
   justify-content: center;
 }
+
+.delete-btn{
+  display: none;
+  opacity: 0;
+}
+
+.delete-btn.show{
+  display: block;
+  opacity:1;
+  background-color: red;
+  color: white;
+  border-radius: 16px;
+  padding: 5px 8px;
+}
+
 
 .btns-data {
   display: flex;
@@ -252,13 +311,76 @@ span#data-today {
 .add-category-btn {
   padding: 10px 75px;
   border-radius: 8px;
+  transition: all 0.3s ease;
 }
+
+
 
 .add-category-btn.active {
   padding: 10px 75px;
   border-radius: 8px;
   background-color: #70ffdd;
   color: #091921;
+}
+
+.add-category-btn:hover {
+  background-color: #70ffdd;
+  color: #091921;
+}
+
+#category-list-for-classification{
+  padding-left: 0;
+}
+
+.classification-category {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    position: relative;
+}
+
+.category-title {
+    flex: 1;
+}
+
+.delete-category-btn {
+    opacity: 0;
+    visibility: hidden;
+    background: none;
+    border: none;
+    color: #666;
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 3px;
+    transition: all 0.3s ease;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.delete-category-btn:hover {
+    color: rgb(255, 0, 0);
+    transform: scale(1.1);
+}
+
+/* Показываем кнопку удаления только при hover на категории */
+.classification-category:hover .delete-category-btn {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Скрываем кнопку удаления для активной категории */
+.classification-category.chosen .delete-category-btn {
+    display: none;
+}
+
+/* Иконка крестика */
+.delete-category-btn svg {
+    width: 12px;
+    height: 12px;
 }
 
 /* По умолчанию показываем ul, скрываем select */
