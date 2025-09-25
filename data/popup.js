@@ -1,25 +1,9 @@
-import { Cal, selectData } from "./calendar.js";
-import { renderCategories, addCategory } from "./categories.js";
+import { categoriesStore } from "./categories-store.js";
 
 const popupContainer = document.getElementById("popup-container");
 
 function identifyPopup(type) {
   const templates = {
-    calendar: `
-      <div class="calendar-wrapper">
-        <div id="divCal"></div>
-      </div>
-    `,
-    category: `
-      <div class="category">
-        <div class="category-wrapper">
-          <ul id="category-list"></ul>
-        </div>
-        <button class="create-inverse js-new-category-btn" id="add-new-list-btn">
-          + Create new list
-        </button>
-      </div>
-    `,
     newList: `
       <div class="new-list-wrapper">
         <input type="text" placeholder="write name of new list" class="new-category js-new-category" id="text-new-category">
@@ -49,8 +33,6 @@ function identifyPopup(type) {
   `;
 }
 
-// ——— РЕНДЕР ПОПАПА ———
-
 export function showPopup(html, closeBtnId) {
   popupContainer.innerHTML = html;
 
@@ -59,99 +41,46 @@ export function showPopup(html, closeBtnId) {
   });
 }
 
-export function closePopup(namePopup) {
+export function closePopup() {
   popupContainer.innerHTML = "";
 }
 
-// ——— ПОДКЛЮЧЕНИЕ СОБЫТИЙ ———
-
-export function activatePopups() {
-  // 1) Находим кнопки, которые существуют на странице изначально
-  const dataBtn = document.getElementById("data-btn");
-  const categoryBtn = document.getElementById("category-btn");
-  const newListBtn = document.getElementById("add-new-list-btn");
-
-  // 2) Открыть календарь
-  if (dataBtn) {
-    dataBtn.addEventListener("click", () => {
-      // важно: id для кнопки закрытия соответствует шаблону close-${type}-btn => close-calendar-btn
-      showPopup(identifyPopup("calendar"), "close-calendar-btn");
-      new Cal("divCal").showcurr(); // инициализация календаря
-    });
-  }
-
-  // 3) Открыть список категорий
-  if (categoryBtn) {
-    categoryBtn.addEventListener("click", () => {
-      // важно: корректный id кнопки закрытия
-      showPopup(identifyPopup("category"), "close-category-btn");
-      renderCategories(); // отрисовать категории внутри попапа
-      // дальше обработчики не навешиваем — их поймает делегирование на popupContainer
-    });
-  }
-
-  // 4) Делегирование кликов внутри попапа
-  popupContainer.addEventListener("click", (e) => {
-    // 4.1) Закрыть попап по клику на крестик
-    const closeBtn = e.target.closest(".popup-close");
-    if (closeBtn) {
-      closePopup();
-      return;
-    }
-
-    // 4.2) Клик по кнопке “+ Create new list” внутри попапа категорий
-    const newListBtn = e.target.closest(".js-new-category-btn");
-    if (newListBtn) {
-      openNewListPopup();
-      return;
-    }
-
-    // 4.3) Клик по кнопке "Add" в попапе создания новой категории
-    const addBtn = e.target.closest(".js-add-category");
-    if (addBtn) {
-      const input = popupContainer.querySelector(".js-new-category");
-      const value = (input?.value || "").trim();
-      if (!value) return; // защита от пустых значений
-      addCategory(value);
-      // после добавления возвращаемся к списку категорий и перерисовываем его
-      showPopup(identifyPopup("category"), "close-category-btn");
-      renderCategories();
-      return;
-    }
-  });
-
-  // 5) Делегирование ввода (активация/деактивация кнопки Add)
-  popupContainer.addEventListener("input", (e) => {
-    // следим именно за полем ввода новой категории
-    if (e.target.matches("#text-new-category")) {
-      const addBtn = popupContainer.querySelector("#adding-new-category");
-      const isFilled = !!e.target.value.trim();
-      if (addBtn) {
-        addBtn.disabled = !isFilled;
-        addBtn.classList.toggle("active", isFilled);
-      }
-    }
-  });
-}
-
-// 2. Прямой обработчик для кнопки "+ Create new list"
-const newListBtn = document.getElementById("add-new-list-btn");
-
-if (newListBtn) {
-  newListBtn.addEventListener("click", () => {
-    openNewListPopup();
-  });
-}
 
 export function openAlertPopup() {
   showPopup(identifyPopup("alert"), "close-alert-btn");
 }
-
-function openNewListPopup() {
-  // открыть попап создания новой категории
+export function openNewListPopup(onCategoryAdded) {
   showPopup(identifyPopup("newList"), "close-newList-btn");
-  // инициализировать состояние кнопки Add (выкл, пока поле пустое)
+  
   const input = popupContainer.querySelector("#text-new-category");
   const addBtn = popupContainer.querySelector("#adding-new-category");
-  if (addBtn) addBtn.disabled = !input?.value.trim();
+  
+  if (!input || !addBtn) return;
+  
+  addBtn.disabled = true;
+  
+  input.addEventListener('input', () => {
+    addBtn.disabled = !input.value.trim();
+  });
+  
+  addBtn.addEventListener('click', () => {
+    const categoryName = input.value.trim();
+    if (categoryName) {
+      categoriesStore.addCategorie({ title: categoryName });
+      
+      if (onCategoryAdded) {
+        onCategoryAdded();
+      }
+      
+      closePopup();
+    }
+  });
+  
+  input.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter' && input.value.trim()) {
+      addBtn.click();
+    }
+  });
+  
+  input.focus();
 }
