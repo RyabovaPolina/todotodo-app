@@ -1,75 +1,92 @@
-import { getCategory, categories } from "./categories.js";
-import { renderTodoList } from "../script.js";
-import { generateId } from "../utils/utils.js";
-import { doneList } from "./done.js";
-import { openAlertPopup } from "./popup.js";
+class TodoStore {
+    constructor(){
+        this.todoList = this.loadFromStorage('todolist') || []
+        this.filter = 'all' 
+    }
 
-export let todoList = [];
-loadTodoFromStorage();
+    sortTodos(list) {
+        return [...list].toSorted((a,b) => a.completed - b.completed);
+    }
 
-export function addTodoList() {
-  const text_task = document.querySelector(".new-task").value;
-  const selected_category_name = document.querySelector(
-    ".parameter-category"
-  ).textContent;
-  const category = categories.find(
-    (category) => category.name === selected_category_name
-  );
-  const text_selected_data =
-    document.querySelector(".parameter-data").textContent;
-  const newId = generateId();
+    get allTodos() {
+        return this.sortTodos(this.todoList);
+    }
 
-  if (text_task && category && text_selected_data) {
-    todoList.push({
-      id: newId,
-      text: text_task,
-      categoryId: category.id,
-      data: text_selected_data,
-    });
+    setFilter(filter)
+    {
+        this.filter = filter;
+    }
 
-    input_el.value = "";
-    saveToStorage();
-    renderTodoList(todoList, doneList);
-  } else {
-    openAlertPopup();
-  }
+    get filteredTodos() {
+        switch (this.filter) {
+            case 'all':
+                return this.sortTodos(this.todoList);
+            case 'completed':
+                return this.todoList.filter(todo => todo.completed);
+            case 'active':
+                return this.todoList.filter(todo => !todo.completed);
+            default:
+                // filterType - это ID категории
+                console.log
+                return this.todoList.filter(todo => todo.categoryId === this.filter);
+        }
+    }
+
+
+    loadFromStorage(key){
+        try{
+            const data = localStorage.getItem(key)
+            if (data){
+                return JSON.parse(data)
+            }
+            else return null
+        }
+        catch(error){
+            console.error(error.message);
+            return null
+        }
+    }
+
+    saveToStorage(key, data){
+        try{
+            localStorage.setItem(key, JSON.stringify(data))
+        }
+        catch(error){
+            console.error(error.message)
+        }
+    }
+
+    addTodo(todo){
+        const newTodo = {...todo, id: (Date.now()).toString()}
+        this.todoList.push(newTodo)
+        this.saveToStorage('todolist', this.todoList);
+    }
+
+    removeTodo(todoId){
+        const newTodoList = this.todoList.filter(todo=> todo.id !==todoId);
+        this.todoList = newTodoList;
+        
+        this.saveToStorage('todolist', this.todoList);
+    }
+
+    updateTodo(todoId, updates) {
+        const index = this.todoList.findIndex(todo => {
+            console.log(typeof(todo.id));
+            console.log(typeof(todoId))
+            return todo.id === todoId.toString()
+        })
+        if (index !== -1) {
+            this.todoList[index] = { ...this.todoList[index], ...updates };
+            this.saveToStorage('todolist', this.todoList);
+        }
+    }
+
+    getTodosByCategory(categoryId) {
+    return this.sortTodos(
+        this.todoList.filter(todo => todo.categoryId === categoryId)
+    );
 }
 
-export function loadTodoFromStorage() {
-  const saved = JSON.parse(localStorage.getItem("todo")) || [
-    {
-      id: "546737139128912",
-      text: "walk with dog",
-      categoryId: "122138791242",
-      data: "2025-04-08",
-    },
-    {
-      id: "541212128912",
-      text: "wash dishes",
-      categoryId: "712139128912232",
-      data: "2025-04-08",
-    },
-    {
-      id: "5412314245912",
-      text: "make dinner",
-      categoryId: "122138791242",
-      data: "2025-04-08",
-    },
-    {
-      id: "54647139124522",
-      text: "write an essay",
-      categoryId: "322123143233122",
-      data: "2025-04-07",
-    },
-  ];
-
-  // Мутируем массив, а не перезаписываем его
-  todoList.length = 0; // Очищаем текущий массив
-  todoList.push(...saved); // Заполняем новый массив
-
-  //console.log(todoList);
 }
 
-export function saveToStorage() {
-  localStorage.setItem("todo", JSON.stringify(todoList));
-}
+export const store = new TodoStore();
